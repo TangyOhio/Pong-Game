@@ -17,7 +17,13 @@ class GameControls extends React.Component {
           <input type="color" />
           Ball Color
           <input type="color" />
-          <input type="submit" value="New Game" />
+          <input
+            type="button"
+            value="New Game"
+            onClick={() => {
+              this.props.callback();
+            }}
+          />
         </form>
       </article>
     );
