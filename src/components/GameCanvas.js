@@ -6,8 +6,10 @@ class GameCanvas extends Component {
     this.deadBalls = [];
   }
 
-  componentDidMount = () => {
-    this._initializeGameCanvas();
+  componentDidUpdate = () => {
+    if (this.props.start) {
+      this._initializeGameCanvas();
+    }
   };
 
   _initializeGameCanvas = () => {

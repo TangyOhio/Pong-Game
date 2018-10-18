@@ -15,12 +15,12 @@ class GameInterface extends Component {
 
   updateGame = game =>
     this.setState({
-      start: true,
-      maxScore: game.score,
-      ballVel: game.ballVel,
-      p1Color: game.p1Color,
-      p2Color: game.p2Color,
-      ballColor: game.ballColor
+      start: true
+      // maxScore: game.score,
+      // ballVel: game.ballVel,
+      // p1Color: game.p1Color,
+      // p2Color: game.p2Color,
+      // ballColor: game.ballColor
     });
 
   render() {
@@ -33,6 +33,7 @@ class GameInterface extends Component {
       ballColor
     } = this.state;
 
+    console.log(this.state);
     return (
       <main
         style={{
