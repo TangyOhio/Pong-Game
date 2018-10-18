@@ -34,6 +34,7 @@ class GameInterface extends Component {
       ballColor
     } = this.state;
 
+    console.log(this.state);
     return (
       <main
         style={{
