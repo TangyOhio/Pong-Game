@@ -4,23 +4,34 @@ import GameCanvas from "./components/GameCanvas";
 import GameControls from "./components/GameControls";
 
 class GameInterface extends Component {
+  // Default Game stats
   state = {
     start: false,
     maxScore: 5,
     ballVel: 1,
-    p1Color: "#fff",
-    p2Color: "#fff",
-    ballColor: "red"
+    p1Color: "#0d25d5",
+    p2Color: "#dc1408",
+    ballColor: "#dc1408"
   };
 
+  // Callback function for the game controls, to set the state
   updateGame = game => {
     this.setState({
       start: true,
-      maxScore: parseInt(game.maxScore),
-      ballVel: parseInt(game.ballVel),
+      maxScore: parseInt(game.maxScore, 10),
+      ballVel: parseInt(game.ballVel, 10),
       p1Color: game.p1Color,
       p2Color: game.p2Color,
       ballColor: game.ballColor
+    });
+  };
+
+  // Callback function for the endGame in the game canvas
+  // It's not optimal to hard code start in this function and the one above,
+  // but I haven't run into a problem with this implementation
+  endGame = () => {
+    this.setState({
+      start: false
     });
   };
 
@@ -34,7 +45,6 @@ class GameInterface extends Component {
       ballColor
     } = this.state;
 
-    console.log(this.state);
     return (
       <main
         style={{
@@ -60,6 +70,7 @@ class GameInterface extends Component {
             p1Color={p1Color}
             p2Color={p2Color}
             ballColor={ballColor}
+            callback={this.endGame}
           />
           <GameControls callback={this.updateGame} />
         </section>
