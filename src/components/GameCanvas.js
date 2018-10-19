@@ -33,6 +33,7 @@ class GameCanvas extends Component {
     this.player1 = new this.GameClasses.Box({
       x: 10,
       y: 200,
+
       // I realize I went pretty heavy with checking everything in case they were undefined,
       // but I just wanted to be sure I didn't break it
       width:
