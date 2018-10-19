@@ -9,7 +9,6 @@ class GameCanvas extends Component {
   // I changed it to when the component updates so the parent can actually pass stuff through,
   // but initializing the canvas when the game ends isn't ideal
   componentDidUpdate = () => {
-    console.log("hullo");
     this._initializeGameCanvas();
   };
 
@@ -34,18 +33,41 @@ class GameCanvas extends Component {
     this.player1 = new this.GameClasses.Box({
       x: 10,
       y: 200,
-      width: 15,
-      height: 80,
-      color: this.props.p1Color,
-      velocityY: 2
+
+      // I realize I went pretty heavy with checking everything in case they were undefined,
+      // but I just wanted to be sure I didn't break it
+      width:
+        this.props.config.p1Width === undefined
+          ? 15
+          : this.props.config.p1Width,
+      height:
+        this.props.config.p1Height === undefined
+          ? 80
+          : this.props.config.p1Height,
+      color:
+        this.props.config.p1Color === undefined
+          ? "#0d25d5"
+          : this.props.config.p1Color,
+      velocityY:
+        this.props.config.p1Vel === undefined ? 2 : this.props.config.p1Vel
     });
     this.player2 = new this.GameClasses.Box({
       x: 725,
       y: 200,
-      width: 15,
-      height: 80,
-      color: this.props.p2Color,
-      velocityY: 2
+      width:
+        this.props.config.p2Width === undefined
+          ? 15
+          : this.props.config.p2Width,
+      height:
+        this.props.config.p2Height === undefined
+          ? 80
+          : this.props.config.p2Height,
+      color:
+        this.props.config.p2Color === undefined
+          ? "#dc1408"
+          : this.props.config.p2Color,
+      velocityY:
+        this.props.config.p2Vel === undefined ? 2 : this.props.config.p2Vel
     });
     this.boardDivider = new this.GameClasses.Box({
       x: this.canvas.width / 2 - 2.5,
@@ -57,14 +79,23 @@ class GameCanvas extends Component {
     this.gameBall = new this.GameClasses.Box({
       x: this.canvas.width / 2,
       y: this.canvas.height / 2,
-      width: 15,
-      height: 15,
+      width:
+        this.props.config.ballWidth === undefined
+          ? 15
+          : this.props.config.ballWidth,
+      height:
+        this.props.config.ballHeight === undefined
+          ? 15
+          : this.props.config.ballHeight,
       // Setting the ball color to the same as the background is the best way to play
-      color: this.props.ballColor,
-
-      // Speedy boi
-      velocityX: this.props.ballVel,
-      velocityY: this.props.ballVel
+      color:
+        this.props.config.ballColor === undefined
+          ? "#dc1408"
+          : this.props.config.ballColor,
+      velocityX:
+        this.props.config.velX === undefined ? 1 : this.props.config.velX,
+      velocityY:
+        this.props.config.velY === undefined ? 1 : this.props.config.velY
     });
 
     // start render loop
@@ -126,11 +157,22 @@ class GameCanvas extends Component {
       this.gameBall = new this.GameClasses.Box({
         x: this.canvas.width / 2,
         y: this.canvas.height / 2,
-        width: 15,
-        height: 15,
-        color: "#FF0000",
-        velocityX: 1,
-        velocityY: 1
+        width:
+          this.props.config.ballWidth === undefined
+            ? 15
+            : this.props.config.ballWidth,
+        height:
+          this.props.config.ballHeight === undefined
+            ? 15
+            : this.props.config.ballHeight,
+        color:
+          this.props.config.ballColor === undefined
+            ? "#dc1408"
+            : this.props.config.ballColor,
+        velocityX:
+          this.props.config.velX === undefined ? 1 : this.props.config.velX,
+        velocityY:
+          this.props.config.velY === undefined ? 1 : this.props.config.velY
       });
     } else if (
       this.gameBall.x + this.gameBall.velocityX >
@@ -141,11 +183,22 @@ class GameCanvas extends Component {
       this.gameBall = new this.GameClasses.Box({
         x: this.canvas.width / 2,
         y: this.canvas.height / 2,
-        width: 15,
-        height: 15,
-        color: "#FF0000",
-        velocityX: -1,
-        velocityY: 1
+        width:
+          this.props.config.ballWidth === undefined
+            ? 15
+            : this.props.config.ballWidth,
+        height:
+          this.props.config.ballHeight === undefined
+            ? 15
+            : this.props.config.ballHeight,
+        color:
+          this.props.config.ballColor === undefined
+            ? "#dc1408"
+            : this.props.config.ballColor,
+        velocityX:
+          this.props.config.velX === undefined ? -1 : -this.props.config.velX,
+        velocityY:
+          this.props.config.velY === undefined ? 1 : this.props.config.velY
       });
     } else {
       this.gameBall.x += this.gameBall.velocityX;
@@ -192,7 +245,7 @@ class GameCanvas extends Component {
 
   // If the player score meets the max score requirement, end the game
   _endGame = (p1, p2) => {
-    if (p1 >= this.props.maxScore) {
+    if (p1 >= this.props.config.maxScore) {
       // End the game
       this.props.callback();
       // Clear canvas
@@ -205,7 +258,7 @@ class GameCanvas extends Component {
         this.canvas.width / 3,
         this.canvas.height / 2
       );
-    } else if (p2 >= this.props.maxScore) {
+    } else if (p2 >= this.props.config.maxScore) {
       // Same as above, wet but effective ¯\_(ツ)_/¯
       this.props.callback();
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -260,7 +313,7 @@ class GameCanvas extends Component {
   })();
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <canvas
         id="pong_canvas"
