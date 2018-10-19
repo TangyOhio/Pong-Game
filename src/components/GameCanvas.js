@@ -6,10 +6,11 @@ class GameCanvas extends Component {
     this.deadBalls = [];
   }
 
+  // I changed it to when the component updates so the parent can actually pass stuff through,
+  // but initializing the canvas when the game ends isn't ideal
   componentDidUpdate = () => {
-    if (this.props.start) {
-      this._initializeGameCanvas();
-    }
+    console.log("hullo");
+    this._initializeGameCanvas();
   };
 
   _initializeGameCanvas = () => {
@@ -35,7 +36,7 @@ class GameCanvas extends Component {
       y: 200,
       width: 15,
       height: 80,
-      color: "#FFF",
+      color: this.props.p1Color,
       velocityY: 2
     });
     this.player2 = new this.GameClasses.Box({
@@ -43,7 +44,7 @@ class GameCanvas extends Component {
       y: 200,
       width: 15,
       height: 80,
-      color: "#FFF",
+      color: this.props.p2Color,
       velocityY: 2
     });
     this.boardDivider = new this.GameClasses.Box({
@@ -58,9 +59,12 @@ class GameCanvas extends Component {
       y: this.canvas.height / 2,
       width: 15,
       height: 15,
-      color: "#FF0000",
-      velocityX: 1,
-      velocityY: 1
+      // Setting the ball color to the same as the background is the best way to play
+      color: this.props.ballColor,
+
+      // Speedy boi
+      velocityX: this.props.ballVel,
+      velocityY: this.props.ballVel
     });
 
     // start render loop
@@ -69,10 +73,16 @@ class GameCanvas extends Component {
 
   // recursively process game state and redraw canvas
   _renderLoop = () => {
-    this._ballCollisionY();
-    this._userInput(this.player1);
-    this._userInput(this.player2);
-    this.frameId = window.requestAnimationFrame(this._renderLoop);
+    // Check if the game has ended
+    this._endGame(this.p1Score, this.p2Score);
+
+    // If the game hasn't ended, keep looping
+    if (this.props.start) {
+      this._ballCollisionY();
+      this._userInput(this.player1);
+      this._userInput(this.player2);
+      this.frameId = window.requestAnimationFrame(this._renderLoop);
+    }
   };
 
   // watch ball movement in Y dimension and handle top/bottom boundary collisions, then call _ballCollisionX
@@ -141,6 +151,7 @@ class GameCanvas extends Component {
       this.gameBall.x += this.gameBall.velocityX;
       this.gameBall.y += this.gameBall.velocityY;
     }
+
     this._drawRender();
   };
 
@@ -177,6 +188,35 @@ class GameCanvas extends Component {
     this.ctx.font = "20px Arial";
     this.ctx.fillStyle = "rgb(255, 255, 255)";
     this.ctx.fillText(this.p2Score, this.canvas.width / 2 + 33, 30);
+  };
+
+  // If the player score meets the max score requirement, end the game
+  _endGame = (p1, p2) => {
+    if (p1 >= this.props.maxScore) {
+      // End the game
+      this.props.callback();
+      // Clear canvas
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      // Display the winner
+      this.ctx.font = "50px Comic Sans";
+      this.ctx.fillStyle = "rgb(255, 255, 255)";
+      this.ctx.fillText(
+        "Player 1 Wins!",
+        this.canvas.width / 3,
+        this.canvas.height / 2
+      );
+    } else if (p2 >= this.props.maxScore) {
+      // Same as above, wet but effective ¯\_(ツ)_/¯
+      this.props.callback();
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.font = "50px Papyrus";
+      this.ctx.fillStyle = "rgb(255, 255, 255)";
+      this.ctx.fillText(
+        "Player 2 Wins!",
+        this.canvas.width / 3,
+        this.canvas.height / 2
+      );
+    }
   };
 
   //track user input
@@ -220,6 +260,7 @@ class GameCanvas extends Component {
   })();
 
   render() {
+    console.log(this.props);
     return (
       <canvas
         id="pong_canvas"
