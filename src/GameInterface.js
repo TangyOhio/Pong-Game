@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import GameCanvas from "./components/GameCanvas";
 import GameControls from "./components/GameControls";
 import HyperGame from "./components/HyperGame";
+import Randomizer from "./components/Randomizer";
 
 class GameInterface extends Component {
   state = {
@@ -65,7 +66,10 @@ class GameInterface extends Component {
             alignItems: "center"
           }}
         >
-          <HyperGame callback={this.updateGame} start={start} />
+          <div>
+            <HyperGame callback={this.updateGame} start={start} />
+            <Randomizer callback={this.updateGame} />
+          </div>
           <GameCanvas start={start} config={config} callback={this.endGame} />
           <GameControls callback={this.updateGame} />
         </section>
