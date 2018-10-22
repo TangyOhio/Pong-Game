@@ -61,11 +61,11 @@ class HyperGame extends React.Component {
             velX:
               "velocityX" in gameData.ball
                 ? parseInt(gameData.ball.velocityX, 10)
-                : 15,
+                : 2,
             velY:
               "velocityY" in gameData.ball
                 ? parseInt(gameData.ball.velocityY, 10)
-                : 15
+                : 2
           };
           this.setupGame(game);
         },
@@ -76,20 +76,16 @@ class HyperGame extends React.Component {
   };
 
   setupGame = game => {
+    let newGame = { ...game, start: true };
     if (this.state.counter === 1) {
-      // console.log(`Start New Game with timer of ${this.delay}`);
-      let newGame = { ...game, start: true };
       this.props.callback(newGame);
       this.setState({ counter: 2 });
       this.timer = setTimeout(this.hyper, this.delay);
     } else if (this.state.counter === 2) {
       if (this.props.start) {
-        // console.log(`Update Game because ${this.props.start}`);
-        // console.log(game);
         this.timer = setTimeout(this.hyper, this.delay);
-        // this.props.callback(game);
+        this.props.callback(newGame);
       } else {
-        // console.log("End Timer Loop");
         clearTimeout(this.timer);
         this.setState({ counter: 1 });
       }

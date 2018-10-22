@@ -24,6 +24,7 @@ class GameCanvas extends Component {
     }
   };
 
+  // When the component mounts, only the
   _initializeGameCanvas = () => {
     // initialize canvas element and bind it to our React class
     this.canvas = this.refs.pong_canvas;
@@ -40,29 +41,23 @@ class GameCanvas extends Component {
       if (e.target.nodeName !== "INPUT") e.preventDefault();
     });
     window.addEventListener("keyup", e => delete this.keys[e.keyCode]);
-  };
 
-  // I ripped this out so I could edit everything easier
-  _configureGame = config => {
     // instantiate our game elements
     this.player1 = new this.GameClasses.Box({
       x: 10,
       y: 200,
-
-      // I realize I went pretty heavy with checking everything in case they were undefined,
-      // but I just wanted to be sure I didn't break it
-      width: config.p1Width === undefined ? 15 : config.p1Width,
-      height: config.p1Height === undefined ? 80 : config.p1Height,
-      color: config.p1Color === undefined ? "#0d25d5" : config.p1Color,
-      velocityY: config.p1Vel === undefined ? 2 : config.p1Vel
+      width: 15,
+      height: 80,
+      color: "#FFF",
+      velocityY: 2
     });
     this.player2 = new this.GameClasses.Box({
       x: 725,
       y: 200,
-      width: config.p2Width === undefined ? 15 : config.p2Width,
-      height: config.p2Height === undefined ? 80 : config.p2Height,
-      color: config.p2Color === undefined ? "#dc1408" : config.p2Color,
-      velocityY: config.p2Vel === undefined ? 2 : config.p2Vel
+      width: 15,
+      height: 80,
+      color: "#FFF",
+      velocityY: 2
     });
     this.boardDivider = new this.GameClasses.Box({
       x: this.canvas.width / 2 - 2.5,
@@ -74,14 +69,42 @@ class GameCanvas extends Component {
     this.gameBall = new this.GameClasses.Box({
       x: this.canvas.width / 2,
       y: this.canvas.height / 2,
-      width: config.ballWidth === undefined ? 15 : config.ballWidth,
-      height: config.ballHeight === undefined ? 15 : config.ballHeight,
-      // Setting the ball color to the same as the background is the best way to play
-      color: config.ballColor === undefined ? "#dc1408" : config.ballColor,
-      velocityX: config.velX === undefined ? 1 : config.velX,
-      velocityY: config.velY === undefined ? 1 : config.velY
+      width: 15,
+      height: 15,
+      color: "#FF0000",
+      velocityX: 1,
+      velocityY: 1
     });
+  };
 
+  // The objects get updated with either the input from the user
+  // Or from the api
+  _configureGame = config => {
+    // I realize I went pretty heavy with checking everything in case they were undefined,
+    // but I just wanted to be sure I didn't break it
+    this.player1.width = config.p1Width === undefined ? 15 : config.p1Width;
+    this.player1.height = config.p1Height === undefined ? 80 : config.p1Height;
+    this.player1.color =
+      config.p1Color === undefined ? "#0d25d5" : config.p1Color;
+    this.player1.velocityY = config.p1Vel === undefined ? 2 : config.p1Vel;
+
+    this.player2.width = config.p2Width === undefined ? 15 : config.p2Width;
+    this.player2.height = config.p2Height === undefined ? 80 : config.p2Height;
+    this.player2.color =
+      config.p2Color === undefined ? "#dc1408" : config.p2Color;
+    this.player2.velocityY = config.p2Vel === undefined ? 2 : config.p2Vel;
+
+    this.gameBall.width =
+      config.ballWidth === undefined ? 15 : config.ballWidth;
+    this.gameBall.height =
+      config.ballHeight === undefined ? 15 : config.ballHeight;
+    // Setting the ball color to the same as the background is the best way to play
+    this.gameBall.color =
+      config.ballColor === undefined ? "#dc1408" : config.ballColor;
+    this.gameBall.velocityX = config.velX === undefined ? 1 : config.velX;
+    this.gameBall.velocityY = config.velY === undefined ? 1 : config.velY;
+
+    console.log(config);
     // start render loop
     this._renderLoop();
   };

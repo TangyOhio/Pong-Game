@@ -31,8 +31,8 @@ class GameInterface extends Component {
         ballColor: game.ballColor,
         ballWidth: parseInt(game.ballWidth, 10),
         ballHeight: parseInt(game.ballHeight, 10),
-        velX: parseInt(game.ballVel, 10),
-        velY: parseInt(game.ballVel, 10)
+        velX: parseInt(game.velX, 10),
+        velY: parseInt(game.velY, 10)
       }
     });
   };

@@ -15,7 +15,8 @@ class GameControls extends React.Component {
     ballColor: "#dc1408",
     ballWidth: 15,
     ballHeight: 15,
-    ballVel: 1
+    velX: 1,
+    velY: 1
   };
   state = { ...this.defaultValues };
 
@@ -49,7 +50,7 @@ class GameControls extends React.Component {
           Ball Speed 1
           <input
             type="radio"
-            id="ballVel"
+            id="velX"
             value={1}
             checked={this.state.ballVel === 1}
             onChange={this.handleChange}
@@ -57,7 +58,7 @@ class GameControls extends React.Component {
           2
           <input
             type="radio"
-            id="ballVel"
+            id="velX"
             value={2}
             checked={this.state.ballVel === 2}
             onChange={this.handleChange}
@@ -65,7 +66,7 @@ class GameControls extends React.Component {
           3
           <input
             type="radio"
-            id="ballVel"
+            id="velX"
             value={3}
             checked={this.state.ballVel === 3}
             onChange={this.handleChange}
