@@ -37,7 +37,6 @@ class GameControls extends React.Component {
   };
 
   render() {
-    console.log(this.state.velX);
     return (
       <article style={{ textAlign: "center" }}>
         <form onSubmit={this.handleSubmit}>
