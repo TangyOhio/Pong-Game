@@ -75,16 +75,22 @@ class HyperGame extends React.Component {
       );
   };
 
+  // The code for dealing with the polling
+  // Counter is an arbitrary value, and I'm sure there's a better
+  // way to handle this, but it's the best I could come up with
   setupGame = game => {
     let newGame = { ...game, start: true };
+    // First time through, just start a new game and start the timer
     if (this.state.counter === 1) {
       this.props.callback(newGame);
       this.setState({ counter: 2 });
       this.timer = setTimeout(this.hyper, this.delay);
+      // Update the game with the new values, and refresh the timer
     } else if (this.state.counter === 2) {
       if (this.props.start) {
         this.timer = setTimeout(this.hyper, this.delay);
         this.props.callback(newGame);
+        // If the game has ended, cancel the timer and reset the counter
       } else {
         clearTimeout(this.timer);
         this.setState({ counter: 1 });
@@ -95,7 +101,6 @@ class HyperGame extends React.Component {
   };
 
   render() {
-    // console.log(this.props.start);
     return <input type="button" value="Hyper Mode" onClick={this.hyper} />;
   }
 }

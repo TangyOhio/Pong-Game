@@ -20,6 +20,11 @@ class GameCanvas extends Component {
     ) {
       this._initializeGameCanvas();
     } else {
+      // Cancel the animation frame if there is once, so they don't double
+      // up and cause a super fast game
+      if (this.frameId) {
+        window.cancelAnimationFrame(this.frameId);
+      }
       this._configureGame(this.props.config);
     }
   };
@@ -104,7 +109,6 @@ class GameCanvas extends Component {
     this.gameBall.velocityX = config.velX === undefined ? 1 : config.velX;
     this.gameBall.velocityY = config.velY === undefined ? 1 : config.velY;
 
-    console.log(config);
     // start render loop
     this._renderLoop();
   };

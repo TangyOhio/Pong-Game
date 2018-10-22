@@ -1,7 +1,7 @@
 import React from "react";
 
 class GameControls extends React.Component {
-  // The default for the game, would be more efficient to set the GameInterface state from here as well
+  // The default for the game
   defaultValues = {
     maxScore: 5,
     p1Color: "#0d25d5",
@@ -20,7 +20,8 @@ class GameControls extends React.Component {
   };
   state = { ...this.defaultValues };
 
-  // When the form is submitted, don't refresh, then send the info to the parent for unloading and instantiating the game
+  // When the form is submitted, don't refresh, then send the
+  // info to the parent for unloading and instantiating the game
   handleSubmit = e => {
     e.preventDefault();
     let game = { start: true, ...this.state };
