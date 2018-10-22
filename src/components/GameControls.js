@@ -79,7 +79,7 @@ class GameControls extends React.Component {
             type="range"
             id="p1Vel"
             min={1}
-            max={3}
+            max={5}
             defaultValue={1}
             onChange={this.handleChange}
           />
@@ -114,7 +114,7 @@ class GameControls extends React.Component {
             type="range"
             id="p2Vel"
             min={1}
-            max={3}
+            max={5}
             defaultValue={1}
             onChange={this.handleChange}
           />
