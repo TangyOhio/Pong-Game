@@ -13,11 +13,10 @@ class GameInterface extends Component {
   // Callback function for the game menu,
   // sets state with what comes from the api
   updateGame = game => {
-    console.log(game);
     this.setState({
-      start: true,
+      start: game.start,
       config: {
-        maxScore: 5,
+        maxScore: "maxScore" in game ? game.maxScore : 5,
         // Player 1 Stuff
         p1Color: game.p1Color,
         p1Width: parseInt(game.p1Width, 10),
@@ -39,8 +38,6 @@ class GameInterface extends Component {
   };
 
   // Callback function for the endGame in the game canvas
-  // It's not optimal to hard code start in this function and updateGame,
-  // but I haven't run into a problem with this implementation
   endGame = () => {
     this.setState({
       start: false
@@ -68,7 +65,7 @@ class GameInterface extends Component {
             alignItems: "center"
           }}
         >
-          <HyperGame callback={this.updateGame} />
+          <HyperGame callback={this.updateGame} start={start} />
           <GameCanvas start={start} config={config} callback={this.endGame} />
           <GameControls callback={this.updateGame} />
         </section>

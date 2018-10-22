@@ -22,7 +22,7 @@ class GameControls extends React.Component {
   // When the form is submitted, don't refresh, then send the info to the parent for unloading and instantiating the game
   handleSubmit = e => {
     e.preventDefault();
-    let game = { ...this.state };
+    let game = { start: true, ...this.state };
     this.props.callback(game);
   };
 
