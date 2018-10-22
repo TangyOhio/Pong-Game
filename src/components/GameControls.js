@@ -38,7 +38,7 @@ class GameControls extends React.Component {
 
   render() {
     return (
-      <article>
+      <article style={{ textAlign: "center" }}>
         <form onSubmit={this.handleSubmit}>
           Score to Win
           <input
@@ -46,30 +46,6 @@ class GameControls extends React.Component {
             id="maxScore"
             defaultValue={this.state.maxScore}
             min={1}
-            onChange={this.handleChange}
-          />
-          Ball Speed 1
-          <input
-            type="radio"
-            id="velX"
-            value={1}
-            checked={this.state.ballVel === 1}
-            onChange={this.handleChange}
-          />
-          2
-          <input
-            type="radio"
-            id="velX"
-            value={2}
-            checked={this.state.ballVel === 2}
-            onChange={this.handleChange}
-          />
-          3
-          <input
-            type="radio"
-            id="velX"
-            value={3}
-            checked={this.state.ballVel === 3}
             onChange={this.handleChange}
           />
           <br />
@@ -98,6 +74,16 @@ class GameControls extends React.Component {
             max={100}
             onChange={this.handleChange}
           />
+          Speed
+          <input
+            type="range"
+            id="p1Vel"
+            min={1}
+            max={3}
+            defaultValue={1}
+            onChange={this.handleChange}
+          />
+          <br />
           Player 2 Color
           <input
             type="color"
@@ -121,6 +107,15 @@ class GameControls extends React.Component {
             defaultValue={this.state.p2Width}
             min={1}
             max={100}
+            onChange={this.handleChange}
+          />
+          Speed
+          <input
+            type="range"
+            id="p2Vel"
+            min={1}
+            max={3}
+            defaultValue={1}
             onChange={this.handleChange}
           />
           <br />
@@ -149,6 +144,25 @@ class GameControls extends React.Component {
             max={50}
             onChange={this.handleChange}
           />
+          Speed X
+          <input
+            type="range"
+            id="velX"
+            min={1}
+            max={3}
+            defaultValue={1}
+            onChange={this.handleChange}
+          />
+          Y
+          <input
+            type="range"
+            id="velY"
+            min={1}
+            max={3}
+            defaultValue={1}
+            onChange={this.handleChange}
+          />
+          <br />
           <input type="submit" value="New Game" />
         </form>
       </article>
